@@ -231,12 +231,15 @@ spec:
           cd /var/hyperledger/orderer/crypto/msp/signcerts
           ls -l
           cat server.crt
-          cat /var/hyperledger/orderer/genesis/genesis.block.base64 | base64 -d > /var/hyperledger/orderer/orderer.genesis.block && orderer
+          echo ===== genesis block =====
+          cat /var/hyperledger/production/orderer/genesis_test.block
+          cat /var/hyperledger/production/orderer/genesis_test.block > /etc/hyperledger/fabric/genesisblock && orderer
+          # cat /var/hyperledger/orderer/genesis/genesis.block.base64 | base64 -d > /var/hyperledger/orderer/orderer.genesis.block && orderer
         ports:
         - containerPort: 7050
-        envFrom:
-        - configMapRef:
-            name: {{ $.Values.orderer.name }}-config
+        # envFrom:
+        # - configMapRef:
+        #     name: {{ $.Values.orderer.name }}-config
         volumeMounts:
         - name: datadir
           mountPath: /var/hyperledger/production/orderer
